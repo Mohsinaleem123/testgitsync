@@ -2,11 +2,10 @@ from __future__ import annotations
 import pendulum
 from airflow.models.dag import DAG
 
-with DAG(
-    dag_id="hello_world_dag",
-    start_date=pendulum.datetime(2023, 1, 1, tz="UTC"),
-    schedule=None,
-    catchup=False,
-    tags=["example"],
-) as dag:
-    pass  # Add your tasks here later
+dag = DAG('hello_world', description='Hello World DAG',
+          schedule_interval='0 12 * * *',
+          start_date=datetime(2022, 8, 24), catchup=False)
+
+hello_operator = PythonOperator(task_id='hello_task', python_callable=print_hello, dag=dag)
+
+hello_operator
